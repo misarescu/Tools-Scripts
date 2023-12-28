@@ -5,9 +5,8 @@ import yaml
 
 run = os.system
 new_window = lambda cmd: run('tmux new-window -n "logs" "{}"'.format(cmd))
-split_vertical = lambda cmd: run('tmux split-window "{}"'.format(cmd))
-split_horizontal = lambda cmd: run('tmux split-window -h "{}"'.format(cmd))
-even_vertical = lambda: run('tmux select-layout even-vertical')
+split_window = lambda cmd: run('tmux split-window "{}"'.format(cmd))
+tile_panes = lambda: run('tmux select-layout tiled')
 
 if __name__ == '__main__':
     try:
@@ -21,6 +20,6 @@ if __name__ == '__main__':
     new_window('docker-compose logs -f {}'.format(services[0]))
 
     for service in services[1:]:
-        split_horizontal('docker-compose logs -f {}'.format(service))
+        split_window('docker-compose logs -f {}'.format(service))
 
-    even_vertical()
+    tile_panes()
