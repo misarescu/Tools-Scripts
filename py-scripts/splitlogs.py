@@ -17,9 +17,9 @@ if __name__ == '__main__':
     config = yaml.load(config_text, Loader=yaml.SafeLoader)
 
     services = list(config['services'].keys())
-    new_window('docker-compose logs -f {}'.format(services[0]))
+    new_window('docker compose logs -f {}'.format(services[0]))
 
     for service in services[1:]:
-        split_window('docker-compose logs -f {}'.format(service))
+        split_window('docker compose logs -f {}'.format(service))
 
     tile_panes()
