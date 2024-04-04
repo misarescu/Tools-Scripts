@@ -35,7 +35,7 @@ COLOR_USR=$'%F{243}'
 COLOR_DIR=$'%F{197}'
 COLOR_GIT=$'%F{39}'
 setopt PROMPT_SUBST
-export PROMPT=$'${COLOR_USR}┌──(%n) ${COLOR_DIR}[%~]${COLOR_GIT}$(parse_git_branch)${COLOR_USR}\n└─${COLOR_DEF}$ '
+export PROMPT=$'${COLOR_USR}┌──(%n)${COLOR_DIR}[%~]${COLOR_GIT}$(parse_git_branch)${COLOR_USR}\n└─${COLOR_DEF}$ '
 autoload -Uz compinit && compinit
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 PATH=$(pyenv root)/shims:$PATH
