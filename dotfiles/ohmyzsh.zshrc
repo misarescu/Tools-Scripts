@@ -114,5 +114,17 @@ alias ip='ip --color=auto'
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
 
+# reset go env stuff here
+go env -w GONOSUMDB=''
+go env -w GOPROXY=''
+
+# loop and extract all kube config files automatically
+export KUBECONFIG=
+for kube_file in $(find $HOME/.kube -maxdepth 1 -type f)
+do
+KUBECONFIG=$KUBECONFIG:$kube_file
+done
+
+
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 PATH=$(pyenv root)/shims:$PATH
