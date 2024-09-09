@@ -133,3 +133,55 @@ export FZF_DEFAULT_OPTS="--preview='bat --color=always {}' --tmux=center,90% --l
 export FZF_ALT_C_OPTS="--preview='tree -c {}'"
 export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always -pl sh' --tmux=center,75% --preview-window='wrap,up,50%'"
 
+# ripgrep > fzf > vim
+function rfv() {
+  RELOAD='reload:rg --column --color=always --smart-case {q} || :'
+  OPENER='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
+            vim {1} +{2}     # No selection. Open the current line in Vim.
+          else
+            vim +cw -q {+f}  # Build quickfix list for the selected items.
+          fi'
+  fzf --disabled --ansi --multi \
+      --tmux=center,95%,95% \
+      --bind "start:$RELOAD" --bind "change:$RELOAD" \
+      --bind "enter:become:$OPENER" \
+      --bind "ctrl-o:execute:$OPENER" \
+      --bind 'alt-a:select-all,alt-d:deselect-all,ctrl-/:toggle-preview' \
+      --delimiter : \
+      --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
+      --preview-window '~4,+{2}+4/3,<80(up)' \
+      --query "$*"
+}
+
+# ripgrep > fzf, basically fzf but with grepping functionality
+function rfzf() {
+  RELOAD='reload:rg --column --color=always --smart-case {q} || :'
+  fzf --disabled --ansi --multi \
+      --tmux=center,95%,95% \
+      --bind "start:$RELOAD" --bind "change:$RELOAD" \
+      --bind 'alt-a:select-all,alt-d:deselect-all,ctrl-/:toggle-preview' \
+      --delimiter : \
+      --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
+      --preview-window '~4,+{2}+4/3,<80(up)' \
+      --query "$*"
+}
+
+# ripgrep > fzf > code, the same as the vim one but for vs code
+function rfc() {
+  RELOAD='reload:rg --column --color=always --smart-case {q} || :'
+  OPENER='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
+            code {1} +{2}     # No selection. Open the current line in Vim.
+          else
+            code +cw -q {+f}  # Build quickfix list for the selected items.
+          fi'
+  fzf --disabled --ansi --multi \
+      --tmux=center,95%,95% \
+      --bind "start:$RELOAD" --bind "change:$RELOAD" \
+      --bind "enter:become:$OPENER" \
+      --bind "ctrl-o:execute:$OPENER" \
+      --bind 'alt-a:select-all,alt-d:deselect-all,ctrl-/:toggle-preview' \
+      --delimiter : \
+      --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
+      --preview-window '~4,+{2}+4/3,<80(up)' \
+      --query "$*"
+}
