@@ -125,6 +125,11 @@ do
 KUBECONFIG=$KUBECONFIG:$kube_file
 done
 
-
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 PATH=$(pyenv root)/shims:$PATH
+
+source <(fzf --zsh)
+export FZF_DEFAULT_OPTS="--preview='bat --color=always {}' --tmux=center,90% --layout=reverse-list --preview-window=top,70% --multi"
+export FZF_ALT_C_OPTS="--preview='tree -c {}'"
+export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always -pl sh' --tmux=center,75% --preview-window='wrap,up,50%'"
+
