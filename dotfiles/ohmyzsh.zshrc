@@ -141,7 +141,7 @@ OPENER_VIM='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
         fi'
 OPENER_CODE='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
                 echo {1}:{2}
-                code --goto {1}:{2}     # No selection. Open the current line in Vim.
+                code --goto {1}:{2}:{3}     # No selection. Open the current line in Vim.
         else
                 echo {+f}
                 code {+f}  # Build quickfix list for the selected items.
