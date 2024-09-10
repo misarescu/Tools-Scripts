@@ -133,19 +133,25 @@ export FZF_DEFAULT_OPTS="--preview='bat --color=always {}' --tmux=center,90% --l
 export FZF_ALT_C_OPTS="--preview='tree -c {}'"
 export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always -pl sh' --tmux=center,75% --preview-window='wrap,up,50%'"
 
+RELOAD='reload:rg --column --color=always --smart-case {q} || :'
+OPENER_VIM='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
+                vim {1} +{2}     # No selection. Open the current line in Vim.
+        else
+                vim +cw -q {+f}  # Build quickfix list for the selected items.
+        fi'
+OPENER_CODE='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
+                echo {1}:{2}
+                code --goto {1}:{2}     # No selection. Open the current line in Vim.
+        else
+                echo {+f}
+                code {+f}  # Build quickfix list for the selected items.
+        fi'
 # ripgrep > fzf > vim
 function rfv() {
-  RELOAD='reload:rg --column --color=always --smart-case {q} || :'
-  OPENER='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
-            vim {1} +{2}     # No selection. Open the current line in Vim.
-          else
-            vim +cw -q {+f}  # Build quickfix list for the selected items.
-          fi'
-  fzf --disabled --ansi --multi \
-      --tmux=center,95%,95% \
+    fzf --disabled --ansi \
       --bind "start:$RELOAD" --bind "change:$RELOAD" \
-      --bind "enter:become:$OPENER" \
-      --bind "ctrl-o:execute:$OPENER" \
+      --bind "enter:become:$OPENER_VIM" \
+      --bind "ctrl-o:execute:$OPENER_VIM" \
       --bind 'alt-a:select-all,alt-d:deselect-all,ctrl-/:toggle-preview' \
       --delimiter : \
       --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
@@ -153,35 +159,42 @@ function rfv() {
       --query "$*"
 }
 
-# ripgrep > fzf, basically fzf but with grepping functionality
-function rfzf() {
-  RELOAD='reload:rg --column --color=always --smart-case {q} || :'
-  fzf --disabled --ansi --multi \
-      --tmux=center,95%,95% \
-      --bind "start:$RELOAD" --bind "change:$RELOAD" \
-      --bind 'alt-a:select-all,alt-d:deselect-all,ctrl-/:toggle-preview' \
-      --delimiter : \
-      --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
-      --preview-window '~4,+{2}+4/3,<80(up)' \
-      --query "$*"
-}
-
-# ripgrep > fzf > code, the same as the vim one but for vs code
+# ripgrep > fzf > vscode
 function rfc() {
-  RELOAD='reload:rg --column --color=always --smart-case {q} || :'
-  OPENER='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
-            code {1} +{2}     # No selection. Open the current line in Vim.
-          else
-            code +cw -q {+f}  # Build quickfix list for the selected items.
-          fi'
-  fzf --disabled --ansi --multi \
-      --tmux=center,95%,95% \
+    fzf --disabled --ansi \
       --bind "start:$RELOAD" --bind "change:$RELOAD" \
-      --bind "enter:become:$OPENER" \
-      --bind "ctrl-o:execute:$OPENER" \
+      --bind "enter:become:$OPENER_CODE" \
+      --bind "ctrl-o:execute:$OPENER_CODE" \
       --bind 'alt-a:select-all,alt-d:deselect-all,ctrl-/:toggle-preview' \
       --delimiter : \
-      --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
       --preview-window '~4,+{2}+4/3,<80(up)' \
+      --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
+      --query "$*"
+}
+
+# ripgrep search with fzf
+function rf() {
+    fzf --disabled --ansi \
+      --bind "start:$RELOAD" --bind "change:$RELOAD" \
+      --bind 'alt-a:select-all,alt-d:deselect-all,ctrl-/:toggle-preview' \
+      --delimiter : \
+      --preview-window '~4,+{2}+4/3,<80(up)' \
+      --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
+      --query "$*"
+}
+
+# fzf > vim
+function fzfv() {
+    fzf --bind "enter:become:$OPENER_VIM" \
+      --bind 'alt-a:select-all,alt-d:deselect-all,ctrl-/:toggle-preview' \
+      --delimiter : \
+      --query "$*"
+}
+
+# fzf > vscode
+function fzfc() {
+    fzf --bind "enter:become:$OPENER_CODE" \
+      --bind 'alt-a:select-all,alt-d:deselect-all,ctrl-/:toggle-preview' \
+      --delimiter : \
       --query "$*"
 }
