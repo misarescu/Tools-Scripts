@@ -140,10 +140,8 @@ OPENER_VIM='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
                 vim +cw -q {+f}  # Build quickfix list for the selected items.
         fi'
 OPENER_CODE='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
-                echo {1}:{2}
                 code --goto {1}:{2}:{3}     # No selection. Open the current line in Vim.
         else
-                echo {+f}
                 code {+f}  # Build quickfix list for the selected items.
         fi'
 # ripgrep > fzf > vim
