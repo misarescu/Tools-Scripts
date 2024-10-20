@@ -128,6 +128,18 @@ done
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 PATH=$(pyenv root)/shims:$PATH
 
+# set correct themes for ligth/dark themes (MacOS)
+
+if [[ $(uname) == 'Darwin' ]]; then
+
+	export DARK_MODE=light
+	if [[ $(osascript -e 'tell application "System Events" to tell appearance preferences to get dark mode') = true ]]; then
+		export DARK_MODE=dark
+	fi
+	
+	source ~/terminal-themes.sh $DARK_MODE
+fi
+
 source <(fzf --zsh)
 export FZF_DEFAULT_OPTS="--preview='bat --color=always {}' --tmux=center,90% --layout=reverse-list --preview-window=top,70% --multi"
 export FZF_ALT_C_OPTS="--preview='tree -c {}'"
