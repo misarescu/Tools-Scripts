@@ -113,23 +113,20 @@ alias ip='ip --color=auto'
 
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
-
-# reset go env stuff here
-go env -w GONOSUMDB=''
-go env -w GOPROXY=''
-
 # loop and extract all kube config files automatically
 export KUBECONFIG=
 for kube_file in $(find $HOME/.kube -maxdepth 1 -type f)
 do
 KUBECONFIG=$KUBECONFIG:$kube_file
 done
+# reset go env stuff here
+go env -w GONOSUMDB=''
+go env -w GOPROXY=''
 
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 PATH=$(pyenv root)/shims:$PATH
 
-# set correct themes for ligth/dark themes (MacOS)
-
+# set correct cli tools theme
 export DARK_MODE=light
 if [[ $(uname) == 'Darwin' ]]; then
 	if [[ $(osascript -e 'tell application "System Events" to tell appearance preferences to get dark mode') = true ]]; then
@@ -144,6 +141,8 @@ fi
 source ~/terminal-themes.sh $DARK_MODE
 
 source <(fzf --zsh)
+source <(zoxide init zsh --cmd cd)
+
 export FZF_DEFAULT_OPTS="--preview='bat --color=always {}' --tmux=center,90% --layout=reverse-list --preview-window=top,70% --multi"
 export FZF_ALT_C_OPTS="--preview='tree -c {}'"
 export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always -pl sh' --tmux=center,75% --preview-window='wrap,up,50%'"
