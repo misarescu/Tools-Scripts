@@ -129,11 +129,11 @@ PATH=$(pyenv root)/shims:$PATH
 # set correct cli tools theme
 export DARK_MODE=light
 if [[ $(uname) == 'Darwin' ]]; then
-	if [[ $(osascript -e 'tell application "System Events" to tell appearance preferences to get dark mode') = true ]]; then
+	if [[ $(osascript -e 'tell application "System Events" to tell appearance preferences to get dark mode') == true ]]; then
 		export DARK_MODE=dark
 	fi
 else 
-	if [[ $(gsettings get org.gnome.desktop.interface color-scheme) = 'prefer-dark' ]]; then
+	if [[ $(gsettings get org.gnome.desktop.interface color-scheme) == "'prefer-dark'" ]]; then
 		export DARK_MODE=dark
 	fi	
 fi
