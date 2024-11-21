@@ -138,8 +138,6 @@ else
 	fi	
 fi
 
-source ~/terminal-themes.sh $DARK_MODE
-
 source <(fzf --zsh)
 source <(zoxide init zsh --cmd cd)
 
