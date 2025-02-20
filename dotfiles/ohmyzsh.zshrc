@@ -147,9 +147,9 @@ export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always 
 
 RELOAD='reload:rg --column --color=always --smart-case {q} || :'
 OPENER_VIM='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
-                vim {1} +{2}     # No selection. Open the current line in Vim.
+                $EDITOR {1} +{2}     # No selection. Open the current line in Vim.
         else
-                vim +cw -q {+f}  # Build quickfix list for the selected items.
+                $EDITOR +cw -q {+f}  # Build quickfix list for the selected items.
         fi'
 OPENER_CODE='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
                 code --goto {1}:{2}:{3} .    # No selection. Open the current line in Vim.
