@@ -1,6 +1,6 @@
 -- catppuccin setup
 require("catppuccin").setup({
-	flavour = "mocha"
+  flavour = "mocha"
 })
 
 vim.cmd.colorscheme("catppuccin")
@@ -16,6 +16,13 @@ vim.opt.smartindent = true
 vim.opt.wrap = true
 vim.opt.incsearch = true -- incremental search
 vim.opt.termguicolors = true
+vim.opt.smartcase = true
+vim.opt.ignorecase = true
+vim.opt.mouse = 'a'
+vim.opt.autoindent = true
+
+-- set scrolloff
+vim.opt.scrolloff = 5
 
 require('nvim-autopairs').setup()
 require('ibl').setup()
@@ -24,8 +31,8 @@ require('trouble').setup()
 
 -- stylua: ignore
 local colors = {
-  blue   = '#1e66f5',
-  cyan   = '#74c7ec',
+  blue   = '#89b4fa',
+  cyan   = '#94e2d5',
   black  = '#1e1e2e',
   white  = '#cdd6f4',
   red    = '#f38ba8',
@@ -108,7 +115,7 @@ local cmp = require('cmp')
 
 cmp.setup({
   sources = {
-    {name = 'nvim_lsp'},
+    { name = 'nvim_lsp' },
   },
   snippet = {
     expand = function(args)
@@ -121,8 +128,7 @@ cmp.setup({
     documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
-    ['<CR>'] = cmp.mapping.confirm({select = false}),
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
     ['<C-s>'] = cmp.mapping.complete(),
   }),
 })
-
