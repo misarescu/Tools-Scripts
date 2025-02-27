@@ -1,3 +1,11 @@
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+export EDITOR=$(which nvim)
+alias vim=nvim
+alias vi=nvim
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -82,11 +90,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -110,9 +118,14 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias diff='diff --color=auto'
 alias ip='ip --color=auto'
+alias task='go-task'
 
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/istio-1.21.0/bin
+export PATH=${KREW_ROOT:-$HOME/.krew}/bin:$PATH
 # loop and extract all kube config files automatically
 export KUBECONFIG=
 for kube_file in $(find $HOME/.kube -maxdepth 1 -type f)
@@ -121,7 +134,8 @@ KUBECONFIG=$KUBECONFIG:$kube_file
 done
 # reset go env stuff here
 go env -w GONOSUMDB=''
-go env -w GOPROXY=''
+go env -w GOPROXY=direct
+go env -w GOPRIVATE=''
 
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 PATH=$(pyenv root)/shims:$PATH
@@ -129,15 +143,19 @@ PATH=$(pyenv root)/shims:$PATH
 # set correct cli tools theme
 export DARK_MODE=light
 if [[ $(uname) == 'Darwin' ]]; then
-	if [[ $(osascript -e 'tell application "System Events" to tell appearance preferences to get dark mode') == true ]]; then
-		export DARK_MODE=dark
-	fi
-else 
+        if [[ $(osascript -e 'tell application "System Events" to tell appearance preferences to get dark mode') == true ]]; then
+                export DARK_MODE=dark
+        fi
+else
 	if [[ $(gsettings get org.gnome.desktop.interface color-scheme) == "'prefer-dark'" ]]; then
-		export DARK_MODE=dark
-	fi	
+                export DARK_MODE=dark
+        fi
 fi
 
+source ~/terminal-themes.sh $DARK_MODE
+
+test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 source <(fzf --zsh)
 source <(zoxide init zsh --cmd cd)
 
@@ -147,15 +165,15 @@ export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always 
 
 RELOAD='reload:rg --column --color=always --smart-case {q} || :'
 OPENER_VIM='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
-                $EDITOR {1} +{2}     # No selection. Open the current line in Vim.
-        else
-                $EDITOR +cw -q {+f}  # Build quickfix list for the selected items.
-        fi'
+		$EDITOR {1} +{2}     # No selection. Open the current line in Vim.
+	else
+		$EDITOR +cw -q {+f}  # Build quickfix list for the selected items.
+	fi'
 OPENER_CODE='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
                 code --goto {1}:{2}:{3} .    # No selection. Open the current line in Vim.
-        else
-                code {+f}  # Build quickfix list for the selected items.
-        fi'
+	else
+		code {+f}  # Build quickfix list for the selected items.
+	fi'
 # ripgrep > fzf > vim
 function rfv() {
     fzf --disabled --ansi \
