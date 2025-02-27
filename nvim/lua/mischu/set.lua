@@ -1,9 +1,10 @@
 -- catppuccin setup
 require("catppuccin").setup({
-  flavour = "mocha"
+  flavour = "auto"
 })
 
 vim.cmd.colorscheme("catppuccin")
+
 vim.opt.clipboard = 'unnamedplus' -- use system keyboard for yank
 vim.opt.nu = true                 -- set line numbers -- set line numbers
 vim.opt.relativenumber = true     -- use relative line numbers
@@ -98,9 +99,13 @@ require('mason-lspconfig').setup({
   },
 })
 
+-- lazygit
+-- require('lazygit').setup()
+
 -- Reserve a space in the gutter
 -- This will avoid an annoying layout shift in the screen
 vim.opt.signcolumn = 'yes'
+vim.opt.autoread = true
 
 -- Add cmp_nvim_lsp capabilities settings to lspconfig
 -- This should be executed before you configure any language server
@@ -111,8 +116,8 @@ lspconfig_defaults.capabilities = vim.tbl_deep_extend(
   require('cmp_nvim_lsp').default_capabilities()
 )
 
+-- cmp setup
 local cmp = require('cmp')
-
 cmp.setup({
   sources = {
     { name = 'nvim_lsp' },
@@ -132,3 +137,22 @@ cmp.setup({
     ['<C-s>'] = cmp.mapping.complete(),
   }),
 })
+
+-- DAP
+local dap, dapui = require('dap'), require('dapui')
+local dapgo = require('dap-go')
+dapui.setup()
+dapgo.setup()
+dap.listeners.before.attach.dapui_config = function()
+  dapui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+  dapui.open()
+end
+
+dap.listeners.before.event_terminated.dapui_config = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+  dapui.close()
+end

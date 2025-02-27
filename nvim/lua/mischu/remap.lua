@@ -61,7 +61,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
     vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
     vim.keymap.set('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-    vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+    vim.keymap.set({ 'n', 'x' }, 'gF', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
     vim.keymap.set('n', 'gEx', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
 
     vim.api.nvim_create_autocmd("BufWritePre", {
@@ -72,3 +72,20 @@ vim.api.nvim_create_autocmd('LspAttach', {
     })
   end,
 })
+
+-- DAP keymaps
+local dap, dapui = require('dap'), require('dapui')
+vim.keymap.set('n', '<leader>dc', dap.continue, { desc = 'continue' })
+vim.keymap.set('n', '<leader>dsn', dap.step_over, { desc = 'step over' })
+vim.keymap.set('n', '<leader>dsi', dap.step_into, { desc = 'step into' })
+vim.keymap.set('n', '<leader>dso', dap.step_out, { desc = 'step out' })
+vim.keymap.set('n', '<Leader>dbb', dap.toggle_breakpoint, { desc = 'toggle breakpoint' })
+vim.keymap.set('n', '<Leader>dbB', dap.set_breakpoint, { desc = 'set breakpoint' })
+vim.keymap.set('n', '<Leader>dbl',
+  function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, { desc = 'log point' })
+vim.keymap.set("n", "<leader>de", function() dapui.elements.watches.add(vim.fn.expand('<cword>')) end, {desc='add element to watch', silent = true })
+vim.keymap.set('n', '<Leader>dr', dap.repl.open, { desc = 'repl open' })
+vim.keymap.set('n', '<Leader>dl', dap.run_last, { desc = 'run last' })
+vim.keymap.set('n', '<Leader>dR', dap.run, { desc = 'run' })
+vim.keymap.set('n', '<Leader>dw', dapui.open, { desc = 'open' })
+vim.keymap.set('n', '<Leader>dW', dapui.close, { desc = 'close' })
