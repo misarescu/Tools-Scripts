@@ -64,10 +64,11 @@ require('lualine').setup({
     theme = bubbles_theme,
     component_separators = '',
     section_separators = { left = '', right = '' },
+    globalstatus = true,
   },
   sections = {
     lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
-    lualine_b = { 'filename', 'branch' },
+    lualine_b = { { 'filename', path = 1 }, 'filename', 'branch' },
     lualine_c = {
       '%=', --[[ add your center compoentnts here in place of this comment ]]
     },
