@@ -100,6 +100,28 @@ require('mason-lspconfig').setup({
   },
 })
 
+-- theme telescope
+require('telescope').setup({
+  pickers = {
+    find_files = {
+      theme = 'dropdown',
+      hidden = true,
+    },
+    live_grep = {
+      theme = 'dropdown',
+      hidden = true,
+    },
+    buffers = {
+      theme = 'dropdown',
+      hidden = true,
+    },
+    help_tags = {
+      theme = 'dropdown',
+      hidden = true,
+    },
+  },
+})
+
 -- lazygit
 -- require('lazygit').setup()
 

@@ -4,25 +4,6 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find f
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
--- theme telescope
-require('telescope').setup({
-  pickers = {
-    find_files = {
-      theme = 'dropdown'
-    },
-    live_grep = {
-      theme = 'dropdown'
-    },
-    buffers = {
-      theme = 'dropdown'
-    },
-    help_tags = {
-      theme = 'dropdown'
-    },
-
-  },
-})
-
 -- undotree setup
 vim.keymap.set('n', '<leader>uu', ':UndotreeToggle<CR>', { desc = 'Undo tree toggle' })
 vim.keymap.set('n', '<leader>up', ':UndotreePersistUndo<CR>', { desc = 'Undo tree persist undo' })
@@ -83,7 +64,8 @@ vim.keymap.set('n', '<Leader>dbb', dap.toggle_breakpoint, { desc = 'toggle break
 vim.keymap.set('n', '<Leader>dbB', dap.set_breakpoint, { desc = 'set breakpoint' })
 vim.keymap.set('n', '<Leader>dbl',
   function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, { desc = 'log point' })
-vim.keymap.set("n", "<leader>de", function() dapui.elements.watches.add(vim.fn.expand('<cword>')) end, {desc='add element to watch', silent = true })
+vim.keymap.set("n", "<leader>de", function() dapui.elements.watches.add(vim.fn.expand('<cword>')) end,
+  { desc = 'add element to watch', silent = true })
 vim.keymap.set('n', '<Leader>dr', dap.repl.open, { desc = 'repl open' })
 vim.keymap.set('n', '<Leader>dl', dap.run_last, { desc = 'run last' })
 vim.keymap.set('n', '<Leader>dR', dap.run, { desc = 'run' })
