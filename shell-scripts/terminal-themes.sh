@@ -26,5 +26,3 @@ fi
 sed -i -e "${sed_replace_str}" ~/.tmux.conf
 sed -i -e "${sed_replace_str}" ~/.config/k9s/config.yaml
 sed -i -e "${sed_replace_str_capital}" ~/.config/bat/config
-
-tmux source ~/.tmux.conf
