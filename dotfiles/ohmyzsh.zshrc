@@ -159,9 +159,9 @@ test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/bre
 source <(fzf --zsh)
 source <(zoxide init zsh --cmd cd)
 
-export FZF_DEFAULT_OPTS="--preview='bat --color=always {}' --tmux=center,90% --layout=reverse-list --preview-window=top,70% --multi"
+export FZF_TMUX_OPTS=" -p90%,70%"
 export FZF_ALT_C_OPTS="--preview='tree -c {}'"
-export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always -pl sh' --tmux=center,75% --preview-window='wrap,up,50%'"
+export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always -pl sh' --preview-window='wrap,up,50%'"
 
 RELOAD='reload:rg --column --color=always --smart-case {q} || :'
 OPENER_VIM='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
