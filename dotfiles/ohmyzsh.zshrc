@@ -160,7 +160,7 @@ source <(fzf --zsh)
 source <(zoxide init zsh --cmd cd)
 
 export FZF_ALT_C_OPTS="--preview='tree -c {}'"
-export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always -pl sh' --tmux=center,75% --preview-window='wrap,up,50%'"
+export FZF_CTRL_R_OPTS="--height 50% --preview 'echo {2..} | bat --color=always -pl sh' --preview-window='wrap,up,50%'"
 
 RELOAD='reload:rg --column --color=always --smart-case {q} || :'
 OPENER_VIM='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
