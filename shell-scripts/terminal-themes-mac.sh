@@ -15,7 +15,7 @@ switch_vim_theme() {
 
 # Function to set the fzf theme 
 set_fzf_theme() {
-  export BASE_OPTS="--preview='bat --color=always {}' --layout=reverse-list --preview-window=top,70% --multi"
+  export BASE_OPTS="--preview='bat --color=always {}' --layout=reverse-list --preview-window=top,70% --tmux=center,90%, --multi"
   # export FZF_DEFAULT_OPTS="--preview='bat --color=always {}' --layout=reverse-list --preview-window=top,70% --multi"
   declare -A themes
 
