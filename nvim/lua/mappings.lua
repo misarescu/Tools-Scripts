@@ -5,14 +5,14 @@ require "nvchad.mappings"
 local map = vim.keymap.set
 
 local builtin = require('telescope.builtin')
+local telescope = require('telescope')
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
 -- undotree setup
-map('n', '<leader>uu', ':UndotreeToggle<CR>', { desc = 'Undo tree toggle' })
-map('n', '<leader>up', ':UndotreePersistUndo<CR>', { desc = 'Undo tree persist' })
+-- map('n', '<leader>u', function() telescope.extensions.undo.undo() end, { desc = 'Undo tree toggle' })
 map('n', '<C-d>', '<C-d>zz', { desc = 'Half page down and center' })
 map('n', '<C-u>', '<C-u>zz', { desc = 'Half page up and center' })
 map('n', '<leader>/', '<Plug>(comment_toggle_linewise_current)', { desc = 'Toggle comment' })

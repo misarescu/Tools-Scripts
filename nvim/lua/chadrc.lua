@@ -6,20 +6,32 @@
 local M = {}
 
 M.base46 = {
-	theme_toggle = { "rosepine-dawn", "ashes" },
-	theme = "ashes",
+  theme_toggle = { "rosepine-dawn", "rosepine" },
+  theme = "rosepine",
 
-	-- hl_override = {
-	-- 	Comment = { italic = true },
-	-- 	["@comment"] = { italic = true },
-	-- },
+  hl_override = {
+    Comment = { italic = true },
+    ["@comment"] = { italic = true },
+  },
 }
 
--- M.nvdash = { load_on_startup = true }
--- M.ui = {
---       tabufline = {
---          lazyload = false
---      }
--- }
+M.nvdash = { load_on_startup = true }
+M.ui = {
+  tabufline = {
+    lazyload = false
+  },
+}
+
+M.term = {
+  winopts = { number = false },
+  sizes = { sp = 0.3, vsp = 0.4, ["bo sp"] = 0.3, ["bo vsp"] = 0.4 },
+  float = {
+    row = 0.1,
+    col = 0.1,
+    width = 0.8,
+    height = 0.8,
+    border = "double",
+  },
+}
 
 return M
