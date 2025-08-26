@@ -149,6 +149,12 @@ return {
               git = true,
             },
           },
+          indent_width = 2,
+          indent_markers = { enable = true },
+        },
+        view = {
+          cursorline = true,
+          width = 40,
         },
       }
     end,
