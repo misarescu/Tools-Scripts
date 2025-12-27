@@ -20,33 +20,34 @@ set_fzf_theme() {
   declare -A themes
 
   themes["light"]=" \
-    --color=bg+:#ccd0da,bg:#eff1f5,spinner:#dc8a78,hl:#d20f39 \
-    --color=fg:#4c4f69,header:#d20f39,info:#8839ef,pointer:#dc8a78 \
-    --color=marker:#7287fd,fg+:#4c4f69,prompt:#8839ef,hl+:#d20f39 \
-    --color=selected-bg:#bcc0cc \
-    --color=border:#ccd0da,label:#4c4f69"
+    --color=fg:#797593,bg:#faf4ed,hl:#d7827e \
+	  --color=fg+:#575279,bg+:#f2e9e1,hl+:#d7827e \
+	  --color=border:#dfdad9,header:#286983,gutter:#faf4ed \
+	  --color=spinner:#ea9d34,info:#56949f \
+	  --color=pointer:#907aa9,marker:#b4637a,prompt:#797593" 
   themes["dark"]="\
-    --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
-    --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
-    --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
-    --color=selected-bg:#45475a \
-    --color=border:#313244,label:#cdd6f4"
-
+    --color=fg:#908caa,bg:#232136,hl:#ea9a97 \
+	  --color=fg+:#e0def4,bg+:#393552,hl+:#ea9a97 \
+	  --color=border:#44415a,header:#3e8fb0,gutter:#232136
+	  --color=spinner:#f6c177,info:#9ccfd8
+	  --color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa"
   export FZF_DEFAULT_OPTS="${BASE_OPTS} ${themes["$1"]}"
 }
 
 if [[ $1 == "dark" ]]; then
-    sed_replace_str='s/latte/mocha/g'
-    sed_replace_str_capital='s/Latte/Mocha/g'
+    sed_replace_str='s/dawn/moon/g'
+    # sed_replace_str_capital='s/Dawn/Moon/g'
     switch_vim_theme "dark"
     set_fzf_theme "dark"
 else 
-    sed_replace_str='s/mocha/latte/g'
-    sed_replace_str_capital='s/Mocha/Latte/g'
+    sed_replace_str='s/moon/dawn/g'
+    # sed_replace_str_capital='s/Moon/Dawn/g'
     switch_vim_theme "light"
     set_fzf_theme "light"
 fi
 
-# sed -i '' -e "${sed_replace_str}" ~/.tmux.conf
-sed -i '' -e "${sed_replace_str}" ~/Library/Application\ Support/k9s/config.yaml
-sed -i '' -e "${sed_replace_str_capital}" ~/.config/bat/config
+# sed -i -e "${sed_replace_str}" ~/.tmux.conf
+sed -i -e "${sed_replace_str}" ~/.config/k9s/config.yaml
+sed -i -e "${sed_replace_str}" ~/.config/bat/config
+
+# tmux source ~/.tmux.conf
